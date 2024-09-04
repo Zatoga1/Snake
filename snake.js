@@ -7,13 +7,15 @@ const foodColor = 'red';
 const gridSize = 20;
 let snake, dx, dy, food, score;
 let gameInterval;
+let hasMoved = false;
 
 function initGame() {
     snake = [{x: 160, y: 160}];
-    dx = gridSize;
-    dy = 0;
+    dx = 0;  // Start stationary
+    dy = 0;  // Start stationary
     food = {x: 0, y: 0};
     score = 0;
+    hasMoved = false;  // Snake hasn't moved initially
     createFood();
 }
 
@@ -30,6 +32,8 @@ function drawSnake() {
 }
 
 function moveSnake() {
+    if (dx === 0 && dy === 0) return;  // Don't move if no direction is set
+    
     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
     snake.unshift(head);
 
@@ -85,6 +89,11 @@ function changeDirection(event) {
     const RIGHT_KEY = 39;
     const UP_KEY = 38;
     const DOWN_KEY = 40;
+
+    if (!hasMoved) {
+        // Start moving when the first key is pressed
+        hasMoved = true;
+    }
 
     if (event.keyCode === LEFT_KEY && dx === 0) {
         dx = -gridSize;
