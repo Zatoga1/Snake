@@ -1,14 +1,21 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const restartButton = document.getElementById('restartButton');
 
 const snakeColor = 'black';
 const foodColor = 'red';
 const gridSize = 20;
-let snake = [{x: 160, y: 160}];
-let dx = gridSize;
-let dy = 0;
-let food = {x: 0, y: 0};
-let score = 0;
+let snake, dx, dy, food, score;
+let gameInterval;
+
+function initGame() {
+    snake = [{x: 160, y: 160}];
+    dx = gridSize;
+    dy = 0;
+    food = {x: 0, y: 0};
+    score = 0;
+    createFood();
+}
 
 function createFood() {
     food.x = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
@@ -45,8 +52,8 @@ function clearCanvas() {
 
 function gameLoop() {
     if (checkGameOver()) {
+        clearInterval(gameInterval);
         alert('Game Over! Your score: ' + score);
-        document.location.reload();
     } else {
         clearCanvas();
         drawFood();
@@ -97,6 +104,13 @@ function changeDirection(event) {
     }
 }
 
-createFood();
+function restartGame() {
+    clearInterval(gameInterval);
+    initGame();
+    gameInterval = setInterval(gameLoop, 100);
+}
+
+initGame();
 document.addEventListener('keydown', changeDirection);
-setInterval(gameLoop, 100);
+restartButton.addEventListener('click', restartGame);
+gameInterval = setInterval(gameLoop, 100);
