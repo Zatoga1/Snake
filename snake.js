@@ -11,8 +11,8 @@ let hasMoved = false;
 
 function initGame() {
     snake = [{x: 160, y: 160}];
-    dx = 0;  // Start stationary
-    dy = 0;  // Start stationary
+    dx = 0;  // No movement initially
+    dy = 0;  // No movement initially
     food = {x: 0, y: 0};
     score = 0;
     hasMoved = false;  // Snake hasn't moved initially
@@ -32,8 +32,8 @@ function drawSnake() {
 }
 
 function moveSnake() {
-    if (dx === 0 && dy === 0) return;  // Don't move if no direction is set
-    
+    if (!hasMoved) return;  // Don't move if no direction is set
+
     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
     snake.unshift(head);
 
@@ -91,7 +91,7 @@ function changeDirection(event) {
     const DOWN_KEY = 40;
 
     if (!hasMoved) {
-        // Start moving when the first key is pressed
+        // Set the snake to move when the first key is pressed
         hasMoved = true;
     }
 
