@@ -8,6 +8,7 @@ const gridSize = 20;
 let snake, dx, dy, food, score;
 let gameInterval;
 let hasMoved = false;
+let speed = 100;  // Initial speed (milliseconds per frame)
 
 function initGame() {
     snake = [{x: 160, y: 160}];
@@ -89,6 +90,7 @@ function changeDirection(event) {
     const RIGHT_KEY = 39;
     const UP_KEY = 38;
     const DOWN_KEY = 40;
+    const RESTART_KEY = 82;  // Key code for 'r'
 
     if (!hasMoved) {
         // Set the snake to move when the first key is pressed
@@ -111,15 +113,20 @@ function changeDirection(event) {
         dx = 0;
         dy = gridSize;
     }
+    if (event.keyCode === RESTART_KEY) {
+        restartGame();
+    }
 }
 
 function restartGame() {
     clearInterval(gameInterval);
     initGame();
-    gameInterval = setInterval(gameLoop, 100);
+    // Reduce speed (make the interval time longer)
+    speed = Math.min(speed + 10, 200);  // Increase speed, but cap it to avoid too fast
+    gameInterval = setInterval(gameLoop, speed);
 }
 
 initGame();
 document.addEventListener('keydown', changeDirection);
 restartButton.addEventListener('click', restartGame);
-gameInterval = setInterval(gameLoop, 100);
+gameInterval = setInterval(gameLoop, speed);
