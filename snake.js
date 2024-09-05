@@ -1,6 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const restartButton = document.getElementById('restartButton');
+const homeButton = document.getElementById('homeButton');
 
 const snakeColor = 'black';
 const foodColor = 'red';
@@ -126,7 +126,11 @@ function restartGame() {
     gameInterval = setInterval(gameLoop, speed);
 }
 
+function goToHomePage() {
+    window.location.href = 'index.html';  // Adjust the URL as needed
+}
+
 initGame();
 document.addEventListener('keydown', changeDirection);
-restartButton.addEventListener('click', restartGame);
+homeButton.addEventListener('click', goToHomePage);  // Redirect to home page on button click
 gameInterval = setInterval(gameLoop, speed);
