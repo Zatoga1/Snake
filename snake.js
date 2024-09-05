@@ -1,17 +1,18 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const restartButton = document.getElementById('restartButton');
 const homeButton = document.getElementById('homeButton');
 
 const snakeColor = 'black';
 const foodColor = 'red';
-const gridSize = 20;
+const gridSize = 20;  // Grid size remains the same, but canvas is larger
 let snake, dx, dy, food, score;
 let gameInterval;
 let hasMoved = false;
 let speed = 100;  // Initial speed (milliseconds per frame)
 
 function initGame() {
-    snake = [{x: 160, y: 160}];
+    snake = [{x: 300, y: 300}];  // Adjusted starting position for larger canvas
     dx = 0;  // No movement initially
     dy = 0;  // No movement initially
     food = {x: 0, y: 0};
@@ -132,5 +133,6 @@ function goToHomePage() {
 
 initGame();
 document.addEventListener('keydown', changeDirection);
+restartButton.addEventListener('click', restartGame);  // Restart game on button click
 homeButton.addEventListener('click', goToHomePage);  // Redirect to home page on button click
 gameInterval = setInterval(gameLoop, speed);
